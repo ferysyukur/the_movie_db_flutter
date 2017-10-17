@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:the_movie/conf/TheMovieDb.dart';
 import 'package:the_movie/model/MovieDetail.dart';
 import 'package:the_movie/Theme.dart' as Theme;
 import 'package:the_movie/ui/movie_detail/DetailAppBar.dart';
@@ -149,7 +150,7 @@ class MovieDetailWidget extends StatelessWidget {
           children: <Widget>[
             new ClipPath(
               clipper: new ArcClipper(),
-              child: new Image.network("https://image.tmdb.org/t/p/w500"+movieDetail.backdropUrl,
+              child: new Image.network(TheMovieDb.baseImageUrl+movieDetail.backdropUrl,
                 width: matchParent,
                 fit: BoxFit.cover,
               ),

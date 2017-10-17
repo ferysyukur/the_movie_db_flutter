@@ -5,7 +5,7 @@ import 'package:the_movie/ui/home/HomePage.dart';
 void main(){
   Routes.initRoutes();
   runApp(new MaterialApp(
-    title: "The Moive",
+    title: "The Movie",
     home: new HomePage(),
   ));
 }

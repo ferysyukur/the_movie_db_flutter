@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:the_movie/Theme.dart' as Theme;
 import 'package:http/http.dart' as http;
+import 'package:the_movie/conf/TheMovieDb.dart';
 import 'package:the_movie/model/Movie.dart';
 import 'package:the_movie/ui/home/HomeRow.dart';
 
@@ -19,7 +20,7 @@ class _MovieListState extends State<MovieList> {
   Future<String> getData() async{
     http.Response response = await http.get(
       Uri.encodeFull(
-          "http://api.themoviedb.org/3/movie/popular?api_key=9548fa0910e2897f79dfdc19e0b2e9a0"),
+          "${TheMovieDb.baseUrl}popular?api_key=${TheMovieDb.apiKey}"),
       headers: {"Accept": "application/json"}
     );
 

@@ -1,6 +1,7 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:the_movie/Routes.dart';
+import 'package:the_movie/conf/TheMovieDb.dart';
 import 'package:the_movie/model/Movie.dart';
 import 'package:the_movie/Theme.dart' as Theme;
 
@@ -30,7 +31,7 @@ class HomeRow extends StatelessWidget {
               )
             ),
             child: new Image.network(
-              "https://image.tmdb.org/t/p/w500"+movie.path_url,
+              TheMovieDb.baseImageUrl+movie.path_url,
               height: 125.0,
             ),
           )

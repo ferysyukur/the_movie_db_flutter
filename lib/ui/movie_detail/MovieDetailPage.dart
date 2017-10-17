@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:the_movie/Theme.dart' as Theme;
+import 'package:the_movie/conf/TheMovieDb.dart';
 import 'package:the_movie/model/Genres.dart';
 import 'package:the_movie/model/MovieDetail.dart';
-import 'package:the_movie/ui/movie_detail/DetailAppBar.dart';
 import 'package:the_movie/ui/movie_detail/MovieDetailWidget.dart';
 
  class MovieDetailPage extends StatefulWidget {
@@ -29,7 +29,7 @@ import 'package:the_movie/ui/movie_detail/MovieDetailWidget.dart';
    Future<http.Response> _response;
 
    void _refresh(){
-     url = "http://api.themoviedb.org/3/movie/${widget.id}?api_key=9548fa0910e2897f79dfdc19e0b2e9a0";
+     url = "${TheMovieDb.baseUrl}${widget.id}?api_key=${TheMovieDb.apiKey}";
      setState((){
        _response = http.get(url);
      });
