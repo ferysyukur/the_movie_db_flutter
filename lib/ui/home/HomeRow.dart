@@ -102,11 +102,15 @@ class HomeRow extends StatelessWidget {
     );
   }
 
-  _navigate() {
+  _navigate() async {
     Routes.navigateTo(mContext,
         '/detail/${movie.id}',
       transition: TransitionType.fadeIn
     );
+//    prefs = await SharedPreferences.getInstance();
+//    String getMovie = prefs.getString('movie');
+//    print("Movie get: ${getMovie == null ? "kosong" : getMovie}");
+//    prefs.setString('movie', movie.title);
   }
 }
 

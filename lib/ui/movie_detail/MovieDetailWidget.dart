@@ -3,6 +3,7 @@ import 'package:the_movie/conf/TheMovieDb.dart';
 import 'package:the_movie/model/MovieDetail.dart';
 import 'package:the_movie/Theme.dart' as Theme;
 import 'package:the_movie/ui/movie_detail/DetailAppBar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class MovieDetailWidget extends StatelessWidget {
@@ -12,9 +13,13 @@ class MovieDetailWidget extends StatelessWidget {
   MovieDetailWidget(this.movieDetail);
 
   List genres;
+  
+  BuildContext mContext;
 
   @override
   Widget build(BuildContext context) {
+    
+    mContext = context;
 
     var matchParent = MediaQuery.of(context).size.width;
     var heightBar = MediaQuery.of(context).padding.top;
@@ -63,14 +68,18 @@ class MovieDetailWidget extends StatelessWidget {
                     ),
                   ),
                 ),
+                movieDetail.homepage != null ?
                 new Container(
                   margin: new EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
                   child: new Center(
-                    child: new Text("${movieDetail.homepage}",
-                      style: Theme.TextStyles.movieTagline,
+                    child: new GestureDetector(
+                      onTap: _homepageClick,
+                      child: new Text("${movieDetail.homepage}",
+                        style: Theme.TextStyles.movieTagline,
+                      ),
                     ),
                   ),
-                ),
+                ) : null,
                 new Container(
                   margin: new EdgeInsets.only(top: 20.0, left: 40.0, right: 40.0),
                   child: new Row(
@@ -193,6 +202,21 @@ class MovieDetailWidget extends StatelessWidget {
         ),
       backgroundColor: Theme.Colors.movieTitle,
     );
+  }
+
+  _homepageClick() async {
+    String url = movieDetail.homepage;
+
+    print("tap: ${url}");
+
+    if(await canLaunch(url)){
+      await launch(url);
+    }else{
+      Scaffold.of(mContext).showSnackBar(
+        new SnackBar(content: new Text("Could not launch ${url}"))
+      );
+//      throw 'Could not launch ${url}';
+    }
   }
 }
 
