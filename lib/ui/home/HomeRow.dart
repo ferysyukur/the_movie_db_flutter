@@ -5,12 +5,19 @@ import 'package:the_movie/conf/TheMovieDb.dart';
 import 'package:the_movie/model/Movie.dart';
 import 'package:the_movie/Theme.dart' as Theme;
 
-class HomeRow extends StatelessWidget {
+class HomeRow extends StatefulWidget {
 
   final Movie movie;
 
   HomeRow(this.movie);
 
+  @override
+  HomeRowState createState() {
+    return new HomeRowState();
+  }
+}
+
+class HomeRowState extends State<HomeRow> {
   BuildContext mContext;
 
   @override
@@ -18,11 +25,11 @@ class HomeRow extends StatelessWidget {
 
     mContext = context;
 
-    final MovieThumbnail = new Container(
+    final movieThumbnail = new Container(
       alignment: new FractionalOffset(0.0, 0.5),
       margin: const EdgeInsets.only(left: 7.0),
       child: new Hero(
-          tag: 'movie-img-${movie.id}',
+          tag: 'movie-img-${widget.movie.id}',
           child: new Container(
             decoration: new BoxDecoration(
               border: new Border.all(
@@ -31,14 +38,14 @@ class HomeRow extends StatelessWidget {
               )
             ),
             child: new Image.network(
-              TheMovieDb.baseImageUrl+movie.path_url,
+              TheMovieDb.baseImageUrl+widget.movie.pathUrl,
               height: 125.0,
             ),
           )
       ),
     );
 
-    final MovieCard = new Container(
+    final movieCard = new Container(
       margin: const EdgeInsets.only(left: 45.0, right: 7.0),
       height: 250.0,
       decoration: new BoxDecoration(
@@ -59,11 +66,11 @@ class HomeRow extends StatelessWidget {
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            new Text(movie.title,style: Theme.TextStyles.movieTitle,),
+            new Text(widget.movie.title,style: Theme.TextStyles.movieTitle,),
             new Padding(
                 padding: new EdgeInsets.only(top: 5.0, right: 7.0),
                 child: new Text(
-                  movie.overview,
+                  widget.movie.overview,
                   textAlign: TextAlign.justify,
                   maxLines: 4,
                   style: Theme.TextStyles.movieLocation,),
@@ -76,7 +83,7 @@ class HomeRow extends StatelessWidget {
                     size: 15.0,
                     color: Theme.Colors.appBarGradientEnd,
                   ),
-                  new Text(" "+movie.star,
+                  new Text(" "+widget.movie.star,
                     style: Theme.TextStyles.movieLocation,
                   )
                 ],
@@ -94,8 +101,8 @@ class HomeRow extends StatelessWidget {
           onPressed: _navigate,
           child: new Stack(
             children: <Widget>[
-              MovieCard,
-              MovieThumbnail
+              movieCard,
+              movieThumbnail
             ],
           )
       ),
@@ -104,7 +111,7 @@ class HomeRow extends StatelessWidget {
 
   _navigate() async {
     Routes.navigateTo(mContext,
-        '/detail/${movie.id}',
+        '/detail/${widget.movie.id}',
       transition: TransitionType.fadeIn
     );
 //    prefs = await SharedPreferences.getInstance();

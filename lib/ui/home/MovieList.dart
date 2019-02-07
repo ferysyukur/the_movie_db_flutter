@@ -25,7 +25,7 @@ class _MovieListState extends State<MovieList> {
     );
 
     this.setState((){
-      Map data = JSON.decode(response.body);
+      Map data = jsonDecode(response.body);
       dataList = data['results'];
       print(dataList);
     });
@@ -35,8 +35,9 @@ class _MovieListState extends State<MovieList> {
 
 
   @override
-  void initState() {
-    this.getData();
+  Future initState() async {
+    super.initState();
+    await getData();
   }
 
   @override
@@ -73,7 +74,7 @@ class _MovieListState extends State<MovieList> {
     return completer.future;
   }
 
-  Movie getMovie(String id, String title, String overview, String path_url, String backdrop_url, String star){
-    return new Movie(id: id, title: title, overview: overview, path_url: path_url, backdrop_url: backdrop_url, star: star);
+  Movie getMovie(String id, String title, String overview, String pathUrl, String backdropUrl, String star){
+    return new Movie(id: id, title: title, overview: overview, pathUrl: pathUrl, backdropUrl: backdropUrl, star: star);
   }
 }

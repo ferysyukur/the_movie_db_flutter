@@ -37,7 +37,8 @@ import 'package:the_movie/ui/movie_detail/MovieDetailWidget.dart';
 
 
    @override
-   void initState() {
+   void initState() async {
+     super.initState();
      _refresh();
    }
 
@@ -62,7 +63,7 @@ import 'package:the_movie/ui/movie_detail/MovieDetailWidget.dart';
          if (!response.hasData) {
            return progressBar;
          } else {
-           Map<String, dynamic> map = JSON.decode(response.data.body);
+           Map<String, dynamic> map = jsonDecode(response.data.body);
            movieDetail = getMovieDetail(
                map['id'].toString(),
                map['title'],

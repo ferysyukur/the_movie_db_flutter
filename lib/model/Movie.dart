@@ -2,9 +2,9 @@ class Movie{
   String id;
   String title;
   String overview;
-  String path_url;
+  String pathUrl;
   String star;
-  String backdrop_url;
+  String backdropUrl;
 
-  Movie({this.id, this.title, this.overview, this.path_url ,this.backdrop_url ,this.star});
+  Movie({this.id, this.title, this.overview, this.pathUrl ,this.backdropUrl ,this.star});
 }

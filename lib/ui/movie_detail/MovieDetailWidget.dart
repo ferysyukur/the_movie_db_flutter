@@ -6,14 +6,21 @@ import 'package:the_movie/ui/movie_detail/DetailAppBar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
-class MovieDetailWidget extends StatelessWidget {
+class MovieDetailWidget extends StatefulWidget {
 
   final MovieDetail movieDetail;
 
   MovieDetailWidget(this.movieDetail);
 
+  @override
+  MovieDetailWidgetState createState() {
+    return new MovieDetailWidgetState();
+  }
+}
+
+class MovieDetailWidgetState extends State<MovieDetailWidget> {
   List genres;
-  
+
   BuildContext mContext;
 
   @override
@@ -24,13 +31,13 @@ class MovieDetailWidget extends StatelessWidget {
     var matchParent = MediaQuery.of(context).size.width;
     var heightBar = MediaQuery.of(context).padding.top;
 
-    genres = movieDetail.genres;
+    genres = widget.movieDetail.genres;
 
-    print(movieDetail.backdropUrl);
+    print(widget.movieDetail.backdropUrl);
 
     var centerPoster = (matchParent-100)/2;
 
-    final ContentDetail = new Container(
+    final contentDetail = new Container(
       margin: new EdgeInsets.only(top: 200.0, left: 35.0, right: 35.0),
       child: new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,7 +62,7 @@ class MovieDetailWidget extends StatelessWidget {
                 new Container(
                   margin: new EdgeInsets.only(top: 110.0, left: 10.0, right: 10.0),
                   child: new Center(
-                    child: new Text(movieDetail.title,
+                    child: new Text(widget.movieDetail.title,
                       style: Theme.TextStyles.movieTitle,
                     ),
                   ),
@@ -63,18 +70,18 @@ class MovieDetailWidget extends StatelessWidget {
                 new Container(
                   margin: new EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
                   child: new Center(
-                    child: new Text("${movieDetail.tagline}",
+                    child: new Text("${widget.movieDetail.tagline}",
                       style: Theme.TextStyles.movieTagline,
                     ),
                   ),
                 ),
-                movieDetail.homepage != null ?
+                widget.movieDetail.homepage != null ?
                 new Container(
                   margin: new EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
                   child: new Center(
                     child: new GestureDetector(
                       onTap: _homepageClick,
-                      child: new Text("${movieDetail.homepage}",
+                      child: new Text("${widget.movieDetail.homepage}",
                         style: Theme.TextStyles.movieTagline,
                       ),
                     ),
@@ -93,7 +100,7 @@ class MovieDetailWidget extends StatelessWidget {
                       ),
                       new Container(
                         margin: new EdgeInsets.only(left: 5.0),
-                        child: new Text(movieDetail.star,
+                        child: new Text(widget.movieDetail.star,
                           style: Theme.TextStyles.movieTitle,
                         ),
                       ),
@@ -105,7 +112,7 @@ class MovieDetailWidget extends StatelessWidget {
                       ),
                       new Container(
                         margin: new EdgeInsets.only(left: 5.0),
-                        child: new Text(movieDetail.popularity,
+                        child: new Text(widget.movieDetail.popularity,
                           style: Theme.TextStyles.movieTitle,
                         ),
                       )
@@ -142,7 +149,7 @@ class MovieDetailWidget extends StatelessWidget {
           ),
           new Container(
             margin: new EdgeInsets.only(top: 10.0),
-            child: new Text(movieDetail.overview,
+            child: new Text(widget.movieDetail.overview,
               textAlign: TextAlign.justify,
               style: Theme.TextStyles.movieOverviewDetail,
             ),
@@ -159,13 +166,13 @@ class MovieDetailWidget extends StatelessWidget {
           children: <Widget>[
             new ClipPath(
               clipper: new ArcClipper(),
-              child: new Image.network(TheMovieDb.baseImageUrl+movieDetail.backdropUrl,
+              child: new Image.network(TheMovieDb.baseImageUrl+widget.movieDetail.backdropUrl,
                 width: matchParent,
                 fit: BoxFit.cover,
               ),
             ),
             new DetailAppBar(),
-            ContentDetail,
+            contentDetail,
             new Container(
               margin: new EdgeInsets.only(top: centerPoster),
               child: new Column(
@@ -179,8 +186,8 @@ class MovieDetailWidget extends StatelessWidget {
                     ),
                     margin: new EdgeInsets.symmetric(horizontal: centerPoster),
                     child: new Hero(
-                        tag: 'movie-img-${movieDetail.id}',
-                        child: new Image.network("https://image.tmdb.org/t/p/w500"+movieDetail.pathUrl,
+                        tag: 'movie-img-${widget.movieDetail.id}',
+                        child: new Image.network("https://image.tmdb.org/t/p/w500"+widget.movieDetail.pathUrl,
                           width: 100.0,
                         )
                     ),
@@ -205,15 +212,15 @@ class MovieDetailWidget extends StatelessWidget {
   }
 
   _homepageClick() async {
-    String url = movieDetail.homepage;
+    String url = widget.movieDetail.homepage;
 
-    print("tap: ${url}");
+    print("tap: $url");
 
     if(await canLaunch(url)){
       await launch(url);
     }else{
       Scaffold.of(mContext).showSnackBar(
-        new SnackBar(content: new Text("Could not launch ${url}"))
+        new SnackBar(content: new Text("Could not launch $url"))
       );
 //      throw 'Could not launch ${url}';
     }
